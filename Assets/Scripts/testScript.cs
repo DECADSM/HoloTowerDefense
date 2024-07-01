@@ -15,7 +15,7 @@ public class testScript : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         instantiatedCharacter = Instantiate(character);
-        ObjectHolder.Instance.grid.grabbedObject = instantiatedCharacter;
+        //ObjectHolder.Instance.grid.grabbedObject = instantiatedCharacter;
     }
     void Update()
     {
