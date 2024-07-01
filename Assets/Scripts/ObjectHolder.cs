@@ -7,6 +7,7 @@ public class ObjectHolder : MonoBehaviour
     // Start is called before the first frame update
 
     public static ObjectHolder Instance { get; private set; }
+    public SnapToGrid grid;
 
     private void Awake()
     {
@@ -18,5 +19,9 @@ public class ObjectHolder : MonoBehaviour
         {
             Instance = this;
         }
+    }
+    private void Start()
+    {
+        grid = GetComponent<SnapToGrid>();
     }
 }
