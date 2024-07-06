@@ -8,7 +8,7 @@ public class ObjectHolder : MonoBehaviour
 
     public static ObjectHolder Instance { get; private set; }
 
-    public GameObject playArea;
+    public Tile[] playArea;
 
     private void Awake()
     {
