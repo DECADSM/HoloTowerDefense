@@ -2025,7 +2025,6 @@ GameObject:
   - component: {fileID: 1464120368}
   - component: {fileID: 1464120370}
   - component: {fileID: 1464120369}
-  - component: {fileID: 1464120371}
   m_Layer: 5
   m_Name: CharacterImage
   m_TagString: Untagged
@@ -2090,18 +2089,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1464120367}
   m_CullTransparentMesh: 1
---- !u!114 &1464120371
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1464120367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04b897a04e8ba544685f13bc65f7d9f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1560774711
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2961,6 +2948,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2117413622}
   - component: {fileID: 2117413626}
+  - component: {fileID: 2117413623}
   m_Layer: 0
   m_Name: ScriptManager
   m_TagString: Untagged
@@ -2982,6 +2970,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2117413623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117413621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db46ebdde3d3e834589a4cd613b3ac3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playArea: {fileID: 336737323}
+  tiles: []
 --- !u!114 &2117413626
 MonoBehaviour:
   m_ObjectHideFlags: 0

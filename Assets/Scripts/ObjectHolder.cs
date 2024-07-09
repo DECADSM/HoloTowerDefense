@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ObjectHolder : MonoBehaviour
 {
@@ -8,7 +9,8 @@ public class ObjectHolder : MonoBehaviour
 
     public static ObjectHolder Instance { get; private set; }
 
-    public Tile[] playArea;
+    public GameObject playArea;
+    public Tile[] tiles;
 
     private void Awake()
     {
@@ -23,5 +25,13 @@ public class ObjectHolder : MonoBehaviour
     }
     private void Start()
     {
+        //Temp setup for tile loading
+        tiles = new Tile[playArea.transform.childCount];
+        for(int i = 0; i < playArea.transform.childCount; i++)
+        {
+            Tile child = playArea.transform.GetChild(i).GetComponent<Tile>();
+            child.ID = i;
+            tiles[i] = child;
+        }
     }
 }

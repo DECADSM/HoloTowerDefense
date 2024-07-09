@@ -23,9 +23,11 @@ public class Character : MonoBehaviour
     void Update()
     {
         //if left click == held
-        if (Physics.Raycast(transform.position, downVector, 10))
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, downVector, out hit, 10))
         {
-            print("There's an Object underneath me!");
+            if(hit.collider.CompareTag("Tile"))
+                print("There's a Tile underneath me with the name: " + hit.collider.name);
         }
     }
 
