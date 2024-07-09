@@ -2,8 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum AttackPattern
+{
+    Melee,
+    Range
+}
+
 public class CharacterObjects : MonoBehaviour
 {
+
     public static CharacterObjects Instance { get; private set; }
 
     private void Awake()
