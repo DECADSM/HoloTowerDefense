@@ -28,6 +28,7 @@ public class CharacterObjects : MonoBehaviour
 
     //This should hold all of the game objects of the characters that can be spawned
     [NonSerialized] public GameObject Mori_Calliope;
+    [NonSerialized] public GameObject[] HoloCharacters;
 
     public GameObject GetMori() { return Mori_Calliope; }
 }
