@@ -2045,7 +2045,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a216aa8b0ad64ad4bb18c910cc178966, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Character: {fileID: 242745620773219232, guid: 4ee0ae3834570b34399aaf80cdb67c7b, type: 3}
 --- !u!1001 &1560774711
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2940,7 +2939,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playArea: {fileID: 336737323}
-  CharacterPrefab: {fileID: 242745620773219232, guid: 4ee0ae3834570b34399aaf80cdb67c7b, type: 3}
+  CharacterPrefabs:
+  - {fileID: 242745620773219232, guid: 4ee0ae3834570b34399aaf80cdb67c7b, type: 3}
   tiles: []
 --- !u!114 &2117413626
 MonoBehaviour:
@@ -2954,6 +2954,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e7688a4e5ee2df498918768575378fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HoloCharacters: []
 --- !u!1001 &1983398145269474384
 PrefabInstance:
   m_ObjectHideFlags: 0

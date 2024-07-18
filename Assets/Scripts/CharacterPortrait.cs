@@ -8,10 +8,6 @@ using UnityEngine.EventSystems;
 public class CharacterPortrait : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerUpHandler
 {
     GameObject Character;
-    string[] MythNames = { "Mori", "Kiara", "Gura", "Ina", "Ame"};
-    string[] PromiseNames = { "Bae", "Fauna", "Kronii", "Mumei", "Irys"};
-    string[] AdventNames = { "Nerisa", "Shiori", "FuwaMoco", "Bijou"};
-    string[] JusticeNames = { "Elizabeth", "Cecilia", "Gigi", "Raora"};
     string thisPortrait;
     Camera main;
     public void OnPointerDown(PointerEventData eventData)
@@ -52,10 +48,10 @@ public class CharacterPortrait : MonoBehaviour, IPointerDownHandler, IPointerEnt
 
     GameObject GetHoloCharacter()
     {
-        foreach(GameObject obj in CharacterObjects.Instance.HoloCharacters)
+        foreach(Character obj in CharacterObjects.Instance.HoloCharacters)
         {
-            if (obj.name.Contains(thisPortrait))
-                return obj;
+            if (obj.gameObject.name.Contains(thisPortrait))
+                return obj.gameObject;
         }
         return null;
     }
@@ -63,22 +59,22 @@ public class CharacterPortrait : MonoBehaviour, IPointerDownHandler, IPointerEnt
     string GetCurrentPortraitName()
     {
         print(gameObject.name);
-        foreach (string holoname in MythNames)
+        foreach (string holoname in CharacterObjects.Instance.MythNames)
         {
             if (gameObject.name.Contains(holoname))
                 return holoname;
         }
-        foreach (string holoname in PromiseNames)
+        foreach (string holoname in CharacterObjects.Instance.PromiseNames)
         {
             if (gameObject.name.Contains(holoname))
                 return holoname;
         }
-        foreach (string holoname in AdventNames)
+        foreach (string holoname in CharacterObjects.Instance.AdventNames)
         {
             if (gameObject.name.Contains(holoname))
                 return holoname;
         }
-        foreach (string holoname in JusticeNames)
+        foreach (string holoname in CharacterObjects.Instance.JusticeNames)
         {
             if (gameObject.name.Contains(holoname))
                 return holoname;

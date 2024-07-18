@@ -10,7 +10,7 @@ public class ObjectHolder : MonoBehaviour
     public static ObjectHolder Instance { get; private set; }
 
     public GameObject playArea;
-    [SerializeField] GameObject CharacterPrefab;
+    [SerializeField] GameObject[] CharacterPrefabs;
     public Tile[] tiles;
 
     private void Awake()
@@ -34,8 +34,14 @@ public class ObjectHolder : MonoBehaviour
             child.ID = i;
             tiles[i] = child;
         }
-        CharacterObjects.Instance.Mori_Calliope = Instantiate(CharacterPrefab);
-        CharacterObjects.Instance.Mori_Calliope.SetActive(false);
+        foreach (GameObject obj in CharacterPrefabs)
+        {
+            GameObject temp = Instantiate(obj);
+            temp.SetActive(false);
+            CharacterObjects.Instance.AddHoloCharacter(temp.GetComponent<Character>());
+        }
+        //CharacterObjects.Instance.Mori_Calliope = Instantiate(CharacterPrefab);
+        //CharacterObjects.Instance.Mori_Calliope.SetActive(false);
 
     }
 }

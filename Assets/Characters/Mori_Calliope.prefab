@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 242745620773219237}
   - component: {fileID: 242745620773219234}
   - component: {fileID: -2460672721122208808}
+  - component: {fileID: 4164010918682100119}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Mori_Calliope
   m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,3 +97,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 15, y: 1, z: 15}
   m_Center: {x: 5, y: 1, z: 0}
+--- !u!114 &4164010918682100119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242745620773219232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fc641cbd74cd2744a90bd781d44889d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Mori
+  Generation: Myth
+  Branch: EN

@@ -6,6 +6,16 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    //Hololive Identifiers
+    [SerializeField] string Name;
+    [SerializeField] string Generation;
+    [SerializeField] string Branch;
+
+    public string GetName() { return Name; }
+    public string GetGeneration() { return Generation; }
+    public string GetBranch() { return Branch; }
+
+
     Vector3 downVector;
     private AttackPattern atkPattern;
     private BoxCollider rangeAtk;
