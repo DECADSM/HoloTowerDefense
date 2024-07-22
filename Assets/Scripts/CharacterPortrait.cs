@@ -10,14 +10,16 @@ public class CharacterPortrait : MonoBehaviour, IPointerDownHandler, IPointerEnt
     GameObject Character;
     string thisPortrait;
     Camera main;
+    bool mouseDown = false;
     public void OnPointerDown(PointerEventData eventData)
     {
-
+        Character.SetActive(true);
+        mouseDown = true;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-
+        mouseDown = false;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -29,13 +31,20 @@ public class CharacterPortrait : MonoBehaviour, IPointerDownHandler, IPointerEnt
     {
         main = Camera.main;
         thisPortrait = GetCurrentPortraitName();
-        print(thisPortrait);
+        Character = GetHoloCharacter();
+        //print(thisPortrait);
     }
 
     private void Update()
     {
         //3D Object follows mouse cursor
         Vector3 mousePos = main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -main.transform.position.z));
+        if (Character.activeSelf && mouseDown)
+        {
+            Character.transform.position = mousePos;
+            //print(transform.position);
+            Character.transform.position = new Vector3(Character.transform.position.x, 1, Character.transform.position.z);
+        }
         /*
         if (Character.activeSelf)
         {
