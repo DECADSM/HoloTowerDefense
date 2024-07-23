@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 
@@ -20,6 +23,18 @@ public class Character : MonoBehaviour
     private AttackPattern atkPattern;
     private BoxCollider rangeAtk;
     private Queue<GameObject> EnemyQueue; //Change to Enemy Script
+    [NonSerialized] public bool mouseDown = false;
+
+    private void OnMouseDown()
+    {
+        gameObject.SetActive(true);
+        mouseDown = true;
+    }
+
+    private void OnMouseUp()
+    {
+        mouseDown = false;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +47,13 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 mousePos = ObjectHolder.Instance.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -ObjectHolder.Instance.main.transform.position.z));
+        if (gameObject.activeSelf && mouseDown)
+        {
+            gameObject.transform.position = mousePos;
+            //print(transform.position);
+            gameObject.transform.position = new Vector3(gameObject.transform.position.x, 1, gameObject.transform.position.z);
+        }
         //if left click == held
         RaycastHit hit;
         if (Physics.Raycast(transform.position, downVector, out hit, 10))

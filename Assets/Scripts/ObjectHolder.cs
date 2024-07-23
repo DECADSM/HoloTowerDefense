@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class ObjectHolder : MonoBehaviour
     public GameObject playArea;
     [SerializeField] GameObject[] CharacterPrefabs;
     public Tile[] tiles;
+    [NonSerialized]public Camera main;
 
     private void Awake()
     {
@@ -26,6 +28,7 @@ public class ObjectHolder : MonoBehaviour
     }
     private void Start()
     {
+        main = Camera.main;
         //Temp setup for tile loading
         tiles = new Tile[playArea.transform.childCount];
         for(int i = 0; i < playArea.transform.childCount; i++)

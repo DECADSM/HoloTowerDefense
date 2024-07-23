@@ -7,19 +7,19 @@ using UnityEngine.EventSystems;
 
 public class CharacterPortrait : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerUpHandler
 {
-    GameObject Character;
+    GameObject character;
+    Character charScript;
     string thisPortrait;
     Camera main;
-    bool mouseDown = false;
     public void OnPointerDown(PointerEventData eventData)
     {
-        Character.SetActive(true);
-        mouseDown = true;
+        character.SetActive(true);
+        charScript.mouseDown = true;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        mouseDown = false;
+        charScript.mouseDown = false;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -29,40 +29,26 @@ public class CharacterPortrait : MonoBehaviour, IPointerDownHandler, IPointerEnt
 
     private void Start()
     {
-        main = Camera.main;
         thisPortrait = GetCurrentPortraitName();
-        Character = GetHoloCharacter();
+        GetHoloCharacter();
         //print(thisPortrait);
     }
 
     private void Update()
     {
-        //3D Object follows mouse cursor
-        Vector3 mousePos = main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -main.transform.position.z));
-        if (Character.activeSelf && mouseDown)
-        {
-            Character.transform.position = mousePos;
-            //print(transform.position);
-            Character.transform.position = new Vector3(Character.transform.position.x, 1, Character.transform.position.z);
-        }
-        /*
-        if (Character.activeSelf)
-        {
-            Character.transform.position = mousePos;
-            //print(transform.position);
-            Character.transform.position = new Vector3(Character.transform.position.x, 1, Character.transform.position.z);
-        }
-        //*/
+
     }
 
-    GameObject GetHoloCharacter()
+    void GetHoloCharacter()
     {
         foreach(Character obj in CharacterObjects.Instance.HoloCharacters)
         {
             if (obj.gameObject.name.Contains(thisPortrait))
-                return obj.gameObject;
+            {
+                character = obj.gameObject;
+                charScript = obj;
+            }
         }
-        return null;
     }
 
     string GetCurrentPortraitName()
