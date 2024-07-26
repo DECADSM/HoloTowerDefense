@@ -20,6 +20,7 @@ public class CharacterPortrait : MonoBehaviour, IPointerDownHandler, IPointerEnt
     public void OnPointerUp(PointerEventData eventData)
     {
         charScript.mouseDown = false;
+        charScript.TileSet = true;
     }
 
     public void OnPointerEnter(PointerEventData eventData)

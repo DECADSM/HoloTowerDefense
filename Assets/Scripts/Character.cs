@@ -18,12 +18,19 @@ public class Character : MonoBehaviour
     public string GetGeneration() { return Generation; }
     public string GetBranch() { return Branch; }
 
-
     Vector3 downVector;
+
+
+
     private AttackPattern atkPattern;
     private BoxCollider rangeAtk;
+
+
     private Queue<GameObject> EnemyQueue; //Change to Enemy Script
+
     [NonSerialized] public bool mouseDown = false;
+    [NonSerialized] public bool TileSet = false;
+    GameObject baseTile;
 
     private void OnMouseDown()
     {
@@ -34,6 +41,7 @@ public class Character : MonoBehaviour
     private void OnMouseUp()
     {
         mouseDown = false;
+        TileSet = true;
     }
 
     // Start is called before the first frame update
@@ -56,10 +64,14 @@ public class Character : MonoBehaviour
         }
         //if left click == held
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, downVector, out hit, 10))
+        if (Physics.Raycast(transform.position, downVector, out hit, 10) && TileSet)
         {
-            if(hit.collider.CompareTag("Tile"))
-                print("There's a Tile underneath me with the name: " + hit.collider.name);
+            if (hit.collider.CompareTag("Tile"))
+                baseTile = hit.collider.gameObject;
+            transform.parent = baseTile.transform;
+            transform.localPosition = new Vector3(0, 1, 0);
+            TileSet = false;
+            print(baseTile.name);
         }
     }
 
