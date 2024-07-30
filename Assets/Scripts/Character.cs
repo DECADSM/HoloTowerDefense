@@ -55,23 +55,31 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         Vector3 mousePos = ObjectHolder.Instance.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -ObjectHolder.Instance.main.transform.position.z));
+        print(mousePos);
         if (gameObject.activeSelf && mouseDown)
         {
             gameObject.transform.position = mousePos;
-            //print(transform.position);
-            gameObject.transform.position = new Vector3(gameObject.transform.position.x, 1, gameObject.transform.position.z);
+            //print(baseTile.name);
+            if(baseTile)
+            gameObject.transform.position = new Vector3(gameObject.transform.position.x, baseTile.transform.position.y + 1, gameObject.transform.position.z);
         }
-        //if left click == held
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, downVector, out hit, 10) && TileSet)
+        if (Physics.Raycast(transform.position, downVector, out hit, 10))
         {
             if (hit.collider.CompareTag("Tile"))
+            {
                 baseTile = hit.collider.gameObject;
+                
+                TileSet = false;
+                //print(baseTile.name);
+            }
+        }
+        if(!mouseDown)
+        {
             transform.parent = baseTile.transform;
-            transform.localPosition = new Vector3(0, 1, 0);
-            TileSet = false;
-            print(baseTile.name);
+                transform.localPosition = new Vector3(0, 1, 0);
         }
     }
 
@@ -90,5 +98,9 @@ public class Character : MonoBehaviour
         EnemyQueue.Dequeue();
     }
 
-
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(transform.position, downVector * 10);
+    }
 }
