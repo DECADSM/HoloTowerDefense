@@ -45,7 +45,7 @@ public class Character : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         downVector = transform.TransformDirection(-Vector3.up);
         rangeAtk = GetComponent<BoxCollider>();
@@ -53,11 +53,11 @@ public class Character : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         
         Vector3 mousePos = ObjectHolder.Instance.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, ObjectHolder.Instance.main.nearClipPlane));
-        print(mousePos);
+        //print(mousePos);
         if (gameObject.activeSelf && mouseDown)
         {
 
@@ -85,6 +85,11 @@ public class Character : MonoBehaviour
             transform.parent = baseTile.transform;
             transform.localPosition = new Vector3(0, 1, 0);
         }
+    }
+
+    public virtual void Attack()
+    {
+
     }
 
     void SetAttackPatter(AttackPattern pattern)
