@@ -32,6 +32,13 @@ public class Character : MonoBehaviour
     [NonSerialized] public bool TileSet = false;
     GameObject baseTile;
 
+
+    int health;
+    int damage;
+    bool isDead;
+
+    float atkSpeed;
+
     private void OnMouseDown()
     {
         gameObject.SetActive(true);
@@ -88,6 +95,21 @@ public class Character : MonoBehaviour
     }
 
     public virtual void Attack()
+    {
+
+    }
+
+    public void TakeDamage(int amt)
+    {
+        health -= amt;
+        if(health <= 0)
+        {
+            isDead = true;
+            Dead();
+        }
+    }
+
+    public void Dead()
     {
 
     }

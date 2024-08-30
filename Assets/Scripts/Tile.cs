@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    [NonSerialized] public CharacterObjects CharacterOnTile;
+    [NonSerialized] public Character CharacterOnTile;
+    [NonSerialized] public Enemy_Base enemy;
     //public Enemy[] EnemiesOnTile;
 
     [NonSerialized] public int ID;
