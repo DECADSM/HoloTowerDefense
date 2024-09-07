@@ -9,6 +9,7 @@ public class Enemy_Base : MonoBehaviour
 {
     Tile currentTile;
     [NonSerialized] public int AttackRange; // >= 1
+    [NonSerialized] public Tile destination;
     
     int health;
     int damage;
