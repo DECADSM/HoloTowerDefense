@@ -5,11 +5,16 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1983398144653437656, guid: a7c552ba141c591498cf814cf27d1c58, type: 3}
       propertyPath: m_Name
-      value: Home Tile
+      value: Home Tile Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1983398144653437656, guid: a7c552ba141c591498cf814cf27d1c58, type: 3}
+      propertyPath: m_TagString
+      value: Home
       objectReference: {fileID: 0}
     - target: {fileID: 1983398144653437657, guid: a7c552ba141c591498cf814cf27d1c58, type: 3}
       propertyPath: m_RootOrder
@@ -60,4 +65,7 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: c1ca86d8ee1cff248a3a2492703d1cf5, type: 2}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7c552ba141c591498cf814cf27d1c58, type: 3}

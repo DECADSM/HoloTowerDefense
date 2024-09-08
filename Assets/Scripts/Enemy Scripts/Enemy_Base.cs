@@ -7,10 +7,11 @@ using UnityEngine;
 
 public class Enemy_Base : MonoBehaviour
 {
-    Tile currentTile;
+    [SerializeField]Tile currentTile;
     [NonSerialized] public int AttackRange; // >= 1
-    [NonSerialized] public Tile destination;
-    
+    public Tile destination;
+    EnemyPathFinding pathFinder;
+
     int health;
     int damage;
     bool isDead;
@@ -21,6 +22,13 @@ public class Enemy_Base : MonoBehaviour
 
     Vector3 downVector;
 
+    //temp
+    //*
+    private void Start()
+    {
+        EnemyInit();
+    }
+    //*/
     void EnemyInit()
     {
         downVector = transform.TransformDirection(-Vector3.up);
@@ -55,6 +63,10 @@ public class Enemy_Base : MonoBehaviour
 
     }
 
+    public Tile GetCurrentTile()
+    {
+        return currentTile;
+    }
     protected virtual void Update()
     {
         RaycastHit hit;
