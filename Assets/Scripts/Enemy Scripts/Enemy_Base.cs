@@ -43,6 +43,11 @@ public class Enemy_Base : MonoBehaviour
         }
     }
 
+    virtual public void Enemy_Update()
+    {
+
+    }
+
     virtual public void Attack()
     {
         Character character = ObjectHolder.Instance.tiles[currentTile.ID + AttackRange].CharacterOnTile;

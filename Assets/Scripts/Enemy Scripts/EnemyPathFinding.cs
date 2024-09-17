@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class EnemyPathFinding : MonoBehaviour
 {
-    public Vector3[] path;
-    public Tile destination;
+    public List<Vector3> path;
     public Enemy_Base agent;
+    public float speed = 3;
+
+    int directions = 3; //used to loop through the directions for pathfinding
+    
+    public void PathFindingInit()
+    {
+        path = new List<Vector3>();
+    }
 
     public void MakePath()
     {
         Tile pathTile = agent.GetCurrentTile();
         while(pathTile != agent.destination)
         {
-            RaycastHit hit;
-            Vector3 raycastPos = transform.position;
-            //Tiles are 5 units apart in X and Z
-            raycastPos.y += 10;
-
             /*
              Loop thorugh the directions (+ X, +/-Z) and cast down to check for a tile with the tile tag
             Furture: Raycast in (+X, +/- Z) for any obstacles
@@ -26,16 +28,48 @@ public class EnemyPathFinding : MonoBehaviour
             compare the distance between the two calculations above
             repeat for all directions then take the Tile closer to the Home Tile
              */
-            
-            if (Physics.Raycast(raycastPos, Vector3.down * 10, out hit, 20))
+            float distance = Mathf.Abs(Vector3.Distance(pathTile.gameObject.transform.position, agent.destination.gameObject.transform.position)); 
+
+            for (int i = 0; i < directions; i++)
             {
-                if (hit.collider.CompareTag("Tile"))
+                Vector3 raycastPos = transform.position;
+                //Tiles are 5 units apart in X and Z
+                switch(i)
                 {
-                    //currentTile = hit.collider.GetComponent<Tile>();
+                    case 0:
+                        raycastPos.x += 10;
+                        break;
+                    case 1:
+                        raycastPos.z += 10;
+                        break;
+                    case 2:
+                        raycastPos.z -= 10;
+                        break;
+                    default:
+                        break;
+                }
+                
+                RaycastHit hit; 
+                if (Physics.Raycast(raycastPos, Vector3.down * 10, out hit, 20))
+                {
+                    if (hit.collider.CompareTag("Tile"))
+                    {
+                        float temp_distance = Mathf.Abs(Vector3.Distance(hit.collider.transform.position, agent.destination.gameObject.transform.position));
+                        if (temp_distance < distance)
+                            path.Add(hit.collider.transform.position);
+                        //currentTile = hit.collider.GetComponent<Tile>();
+                    }
                 }
             }
         }
     }
+
+    public void MoveAgent()
+    {
+        Vector3.MoveTowards(agent.GetCurrentTile().transform.position, agent.destination.transform.position, 3 * Time.deltaTime);
+    }
+
+
 
     public void SetAgent(Enemy_Base host)
     {
