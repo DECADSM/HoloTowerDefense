@@ -8,7 +8,8 @@ public class Tile : MonoBehaviour
 {
     [NonSerialized] public Character CharacterOnTile;
     [NonSerialized] public Enemy_Base enemy;
-    //public Enemy[] EnemiesOnTile;
+    public bool EnemySpawner = false;
+    public int SpawnNumEnemies = 0;
 
     [NonSerialized] public int ID;
 

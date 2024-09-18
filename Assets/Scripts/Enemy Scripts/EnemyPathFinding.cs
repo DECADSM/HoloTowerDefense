@@ -13,6 +13,8 @@ public class EnemyPathFinding : MonoBehaviour
     public void PathFindingInit()
     {
         path = new List<Vector3>();
+        agent = GetComponent<Enemy_Base>();
+        MakePath();
     }
 
     public void MakePath()
@@ -66,7 +68,7 @@ public class EnemyPathFinding : MonoBehaviour
 
     public void MoveAgent()
     {
-        Vector3.MoveTowards(agent.GetCurrentTile().transform.position, agent.destination.transform.position, 3 * Time.deltaTime);
+        agent.transform.position = Vector3.MoveTowards(agent.GetCurrentTile().transform.position, agent.destination.transform.position, 3 * Time.deltaTime);
     }
 
 

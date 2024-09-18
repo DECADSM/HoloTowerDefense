@@ -23,29 +23,47 @@ public class Enemy_Base : MonoBehaviour
     Vector3 downVector;
 
     //temp
-    //*
+    /*
     private void Start()
     {
         EnemyInit();
     }
     //*/
-    void EnemyInit()
-    {
+    public void EnemyInit()
+    { 
         downVector = transform.TransformDirection(-Vector3.up);
+        pathFinder = GetComponent<EnemyPathFinding>();
+        destination = GetDestination();
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, downVector, out hit, 20))
+        var raycast_position = transform.position;
+        raycast_position.y += 10;
+        bool test = Physics.Raycast(raycast_position, downVector, out hit, 20);
+        if (test)
         {
-            if (hit.collider.CompareTag("Tile"))
+            if (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("EnemySpawn"))
             {
                 currentTile = hit.collider.GetComponent<Tile>();
             }
         }
+
+        pathFinder.PathFindingInit();
+    }
+
+    private Tile GetDestination()
+    {
+       foreach(var tile in ObjectHolder.Instance.tiles)
+        {
+            if (tile.CompareTag("Home"))
+                return tile;
+
+        }
+        return null;
     }
 
     virtual public void Enemy_Update()
     {
-
+        pathFinder.MoveAgent();
     }
 
     virtual public void Attack()

@@ -394,6 +394,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 336737327}
     m_Modifications:
+    - target: {fileID: -6942627604839140420, guid: a7c552ba141c591498cf814cf27d1c58, type: 3}
+      propertyPath: EnemySpawner
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1983398144653437656, guid: a7c552ba141c591498cf814cf27d1c58, type: 3}
       propertyPath: m_Name
       value: Enemy Spawn Tile
@@ -1246,6 +1250,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 336737327}
     m_Modifications:
+    - target: {fileID: -6942627604839140420, guid: a7c552ba141c591498cf814cf27d1c58, type: 3}
+      propertyPath: EnemySpawner
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1983398144653437656, guid: a7c552ba141c591498cf814cf27d1c58, type: 3}
       propertyPath: m_Name
       value: Enemy Spawn Tile
@@ -1975,6 +1983,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1003765461}
   - component: {fileID: 1003765462}
+  - component: {fileID: 1003765463}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -2009,6 +2018,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04b897a04e8ba544685f13bc65f7d9f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1003765463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003765460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 883bf2f24e9379141afdf2672b3577a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnTiles: []
+  EnemiesInPlay: []
+  EnemyPrefab: {fileID: 1713360016749276257, guid: 4358c36980d41ed4c86db21dfa3b84c5, type: 3}
 --- !u!1001 &1003921711
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2149,6 +2173,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 336737327}
     m_Modifications:
+    - target: {fileID: -6942627604839140420, guid: a7c552ba141c591498cf814cf27d1c58, type: 3}
+      propertyPath: EnemySpawner
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6942627604839140420, guid: a7c552ba141c591498cf814cf27d1c58, type: 3}
+      propertyPath: SpawnNumEnemies
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1983398144653437656, guid: a7c552ba141c591498cf814cf27d1c58, type: 3}
       propertyPath: m_Name
       value: Enemy Spawn Tile
@@ -3383,6 +3415,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 336737327}
     m_Modifications:
+    - target: {fileID: -6942627604839140420, guid: a7c552ba141c591498cf814cf27d1c58, type: 3}
+      propertyPath: EnemySpawner
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1983398144653437656, guid: a7c552ba141c591498cf814cf27d1c58, type: 3}
       propertyPath: m_Name
       value: Enemy Spawn Tile
@@ -4381,6 +4417,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 336737327}
     m_Modifications:
+    - target: {fileID: 3595737591936929151, guid: 6b9a83f1992545d4583dc5487bc8539d, type: 3}
+      propertyPath: EnemySpawner
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3874791853549818906, guid: 6b9a83f1992545d4583dc5487bc8539d, type: 3}
       propertyPath: m_RootOrder
       value: 50
