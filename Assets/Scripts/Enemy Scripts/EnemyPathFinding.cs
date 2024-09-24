@@ -30,16 +30,18 @@ public class EnemyPathFinding : MonoBehaviour
             compare the distance between the two calculations above
             repeat for all directions then take the Tile closer to the Home Tile
              */
-            float distance = Mathf.Abs(Vector3.Distance(pathTile.gameObject.transform.position, agent.destination.gameObject.transform.position)); 
+            float distance = Mathf.Abs(Vector3.Distance(pathTile.gameObject.transform.position, agent.destination.gameObject.transform.position));
 
             for (int i = 0; i < directions; i++)
             {
-                Vector3 raycastPos = transform.position;
+                Vector3 raycastPos = pathTile.gameObject.transform.position;
+                raycastPos.y += 15;
+                
                 //Tiles are 5 units apart in X and Z
                 switch(i)
                 {
                     case 0:
-                        raycastPos.x += 10;
+                        raycastPos.x -= 10;
                         break;
                     case 1:
                         raycastPos.z += 10;
@@ -58,12 +60,16 @@ public class EnemyPathFinding : MonoBehaviour
                     {
                         float temp_distance = Mathf.Abs(Vector3.Distance(hit.collider.transform.position, agent.destination.gameObject.transform.position));
                         if (temp_distance < distance)
+                        {
                             path.Add(hit.collider.transform.position);
+                            pathTile = hit.collider.GetComponent<Tile>();
+                        }
                         //currentTile = hit.collider.GetComponent<Tile>();
                     }
                 }
             }
         }
+        return;
     }
 
     public void MoveAgent()
