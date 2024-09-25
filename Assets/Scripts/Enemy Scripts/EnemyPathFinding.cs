@@ -20,6 +20,7 @@ public class EnemyPathFinding : MonoBehaviour
     public void MakePath()
     {
         Tile pathTile = agent.GetCurrentTile();
+        List<KeyValuePair<Tile, float>> distances = new List<KeyValuePair<Tile, float>>();
         while(pathTile != agent.destination)
         {
             /*
@@ -30,7 +31,8 @@ public class EnemyPathFinding : MonoBehaviour
             compare the distance between the two calculations above
             repeat for all directions then take the Tile closer to the Home Tile
              */
-            float distance = Mathf.Abs(Vector3.Distance(pathTile.gameObject.transform.position, agent.destination.gameObject.transform.position));
+            if(distances.Count > 0)
+                distances.Clear();
 
             for (int i = 0; i < directions; i++)
             {
@@ -41,13 +43,13 @@ public class EnemyPathFinding : MonoBehaviour
                 switch(i)
                 {
                     case 0:
-                        raycastPos.x -= 10;
+                        raycastPos.x -= 5; //Left to Right
                         break;
                     case 1:
-                        raycastPos.z += 10;
+                        raycastPos.z += 5; //towards the top
                         break;
                     case 2:
-                        raycastPos.z -= 10;
+                        raycastPos.z -= 5; //towards the bottom
                         break;
                     default:
                         break;
@@ -56,18 +58,57 @@ public class EnemyPathFinding : MonoBehaviour
                 RaycastHit hit; 
                 if (Physics.Raycast(raycastPos, Vector3.down * 10, out hit, 20))
                 {
-                    if (hit.collider.CompareTag("Tile"))
+                    if (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("Home"))
                     {
                         float temp_distance = Mathf.Abs(Vector3.Distance(hit.collider.transform.position, agent.destination.gameObject.transform.position));
-                        if (temp_distance < distance)
-                        {
-                            path.Add(hit.collider.transform.position);
-                            pathTile = hit.collider.GetComponent<Tile>();
-                        }
-                        //currentTile = hit.collider.GetComponent<Tile>();
+                        KeyValuePair<Tile, float> tile_distance = new KeyValuePair<Tile, float>(hit.collider.GetComponent<Tile>(), temp_distance);
+                        distances.Add(tile_distance);
                     }
                 }
             }
+
+            //compare all distances to add to the path and set new current tile
+            if (distances.Count == 1)
+            {
+                path.Add(distances[0].Key.transform.position);
+                pathTile = distances[0].Key;
+                continue;
+            }
+            else if (distances.Count == 2)
+            {
+                if (distances[0].Value < distances[1].Value)
+                {
+                        path.Add(distances[0].Key.transform.position);
+                        pathTile = distances[0].Key;
+                }
+                else
+                {
+                    path.Add(distances[1].Key.transform.position);
+                    pathTile = distances[1].Key;
+                }
+            }
+            else
+            {
+                if (distances[0].Value < distances[1].Value)
+                {
+                    if (distances[0].Value < distances[2].Value)
+                    {
+                        path.Add(distances[0].Key.transform.position);
+                        pathTile = distances[0].Key;
+                    }
+                }
+                else if (distances[1].Value < distances[2].Value)
+                {
+                    path.Add(distances[1].Key.transform.position);
+                    pathTile = distances[1].Key;
+                }
+                else if (distances[2].Value < distances[0].Value)
+                {
+                    path.Add(distances[2].Key.transform.position);
+                    pathTile = distances[2].Key;
+                }
+            }
+            
         }
         return;
     }

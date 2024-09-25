@@ -2792,7 +2792,7 @@ GameObject:
   - component: {fileID: 1446392579}
   - component: {fileID: 1446392578}
   - component: {fileID: 1446392577}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2881,7 +2881,7 @@ Transform:
   m_GameObject: {fileID: 1446392576}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 32.48, y: 1.08, z: -7.67}
+  m_LocalPosition: {x: 27.21, y: 1.08, z: -12.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
