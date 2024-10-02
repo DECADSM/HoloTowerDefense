@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - EnemySpawn
   - Home
+  - Wall
   layers:
   - Default
   - TransparentFX

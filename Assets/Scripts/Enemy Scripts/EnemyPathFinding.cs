@@ -9,7 +9,7 @@ public class EnemyPathFinding : MonoBehaviour
     public float moveSpeed = 3;
     Vector3 currentPoint;
 
-    int directions = 3; //used to loop through the directions for pathfinding
+    int directions = 4; //used to loop through the directions for pathfinding
     
     public void PathFindingInit()
     {
@@ -35,35 +35,62 @@ public class EnemyPathFinding : MonoBehaviour
             if(distances.Count > 0)
                 distances.Clear();
 
+            RaycastHit hit;
+            Vector3 WallRaycast = pathTile.transform.position;
+            WallRaycast.y = 0.4f;
+            int[] openDirections = { 0, 0, 0, 0 }; //0 means open, 1 means closed; {forward, up, down, back}
+            int ODPos = 0;
+
             for (int i = 0; i < directions; i++)
             {
-                Vector3 raycastPos = pathTile.gameObject.transform.position;
-                raycastPos.y += 15;
-                
+                Vector3 TileRaycast = pathTile.transform.position;
+                TileRaycast.y += 15;
+                Vector3 direction = new Vector3();
+
                 //Tiles are 5 units apart in X and Z
-                switch(i)
+                switch (i)
                 {
                     case 0:
-                        raycastPos.x -= 5; //Left to Right
+                        TileRaycast.x -= 5; //Left to Right
+                        direction = -agent.transform.right;
                         break;
                     case 1:
-                        raycastPos.z += 5; //towards the top
+                        TileRaycast.z += 5; //towards the top
+                        direction = agent.transform.forward;
+                        ODPos = 1;
                         break;
                     case 2:
-                        raycastPos.z -= 5; //towards the bottom
+                        TileRaycast.z -= 5; //towards the bottom
+                        direction = -agent.transform.forward;
+                        ODPos = 2;
+                        break;
+                    case 3:
+                        TileRaycast.x += 5; //towards the bottom
+                        direction = agent.transform.right;
+                        ODPos = 3;
                         break;
                     default:
                         break;
                 }
-                
-                RaycastHit hit; 
-                if (Physics.Raycast(raycastPos, Vector3.down * 10, out hit, 20))
+
+                if (Physics.Raycast(WallRaycast, direction * 5, out hit, 5))
                 {
-                    if (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("Home"))
+                    if (hit.collider.CompareTag("Wall"))
                     {
-                        float temp_distance = Mathf.Abs(Vector3.Distance(hit.collider.transform.position, agent.destination.gameObject.transform.position));
-                        KeyValuePair<Tile, float> tile_distance = new KeyValuePair<Tile, float>(hit.collider.GetComponent<Tile>(), temp_distance);
-                        distances.Add(tile_distance);
+                        openDirections[ODPos] = 1; //closes off this postion
+                    }
+                }
+
+                if (openDirections[ODPos] == 0)
+                {
+                    if (Physics.Raycast(TileRaycast, Vector3.down * 10, out hit, 20))
+                    {
+                        if (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("Home"))
+                        {
+                            float temp_distance = Mathf.Abs(Vector3.Distance(hit.collider.transform.position, agent.destination.gameObject.transform.position));
+                            KeyValuePair<Tile, float> tile_distance = new KeyValuePair<Tile, float>(hit.collider.GetComponent<Tile>(), temp_distance);
+                            distances.Add(tile_distance);
+                        }
                     }
                 }
             }
