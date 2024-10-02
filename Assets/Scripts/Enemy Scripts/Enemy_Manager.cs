@@ -31,8 +31,8 @@ public class Enemy_Manager : MonoBehaviour
                 if(tile.SpawnNumEnemies > 0)
                 {
                     var new_positon = tile.transform.position;
-                    new_positon.y += 1;
-                    var temp = Instantiate(EnemyPrefab, tile.transform.position, tile.transform.rotation);
+                    new_positon.y = 0.4f;
+                    var temp = Instantiate(EnemyPrefab, new_positon, tile.transform.rotation);
                     temp.GetComponent<Enemy_Base>().EnemyInit();
                     EnemiesInPlay.Add(temp);
                 }

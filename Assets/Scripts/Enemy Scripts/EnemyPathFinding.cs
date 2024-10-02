@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class EnemyPathFinding : MonoBehaviour
 {
-    public List<Vector3> path;
+    public Queue<Vector3> path;
     public Enemy_Base agent;
-    public float speed = 3;
+    public float moveSpeed = 3;
+    Vector3 currentPoint;
 
     int directions = 3; //used to loop through the directions for pathfinding
     
     public void PathFindingInit()
     {
-        path = new List<Vector3>();
+        path = new Queue<Vector3>();
         agent = GetComponent<Enemy_Base>();
         MakePath();
     }
@@ -67,10 +68,13 @@ public class EnemyPathFinding : MonoBehaviour
                 }
             }
 
+            Vector3 waypoint;
             //compare all distances to add to the path and set new current tile
             if (distances.Count == 1)
             {
-                path.Add(distances[0].Key.transform.position);
+
+                waypoint = WaypointAdjustment(distances[0].Key.transform.position);
+                path.Enqueue(waypoint);
                 pathTile = distances[0].Key;
                 continue;
             }
@@ -78,12 +82,14 @@ public class EnemyPathFinding : MonoBehaviour
             {
                 if (distances[0].Value < distances[1].Value)
                 {
-                        path.Add(distances[0].Key.transform.position);
-                        pathTile = distances[0].Key;
+                    waypoint = WaypointAdjustment(distances[0].Key.transform.position);
+                    path.Enqueue(waypoint);
+                    pathTile = distances[0].Key;
                 }
                 else
                 {
-                    path.Add(distances[1].Key.transform.position);
+                    waypoint = WaypointAdjustment(distances[1].Key.transform.position);
+                    path.Enqueue(waypoint);
                     pathTile = distances[1].Key;
                 }
             }
@@ -93,18 +99,21 @@ public class EnemyPathFinding : MonoBehaviour
                 {
                     if (distances[0].Value < distances[2].Value)
                     {
-                        path.Add(distances[0].Key.transform.position);
+                        waypoint = WaypointAdjustment(distances[0].Key.transform.position);
+                        path.Enqueue(waypoint);
                         pathTile = distances[0].Key;
                     }
                 }
                 else if (distances[1].Value < distances[2].Value)
                 {
-                    path.Add(distances[1].Key.transform.position);
+                    waypoint = WaypointAdjustment(distances[1].Key.transform.position);
+                    path.Enqueue(waypoint);
                     pathTile = distances[1].Key;
                 }
                 else if (distances[2].Value < distances[0].Value)
                 {
-                    path.Add(distances[2].Key.transform.position);
+                    waypoint = WaypointAdjustment(distances[2].Key.transform.position);
+                    path.Enqueue(waypoint);
                     pathTile = distances[2].Key;
                 }
             }
@@ -115,10 +124,28 @@ public class EnemyPathFinding : MonoBehaviour
 
     public void MoveAgent()
     {
-        agent.transform.position = Vector3.MoveTowards(agent.GetCurrentTile().transform.position, agent.destination.transform.position, 3 * Time.deltaTime);
+        if (agent.GetCurrentTile().CompareTag("Home"))
+            return;
+        //grab the point in queue then get rid of it
+        if ((currentPoint == Vector3.zero || Vector3.Distance(currentPoint, agent.transform.position) < 0.5f) && path.Count > 0)
+        {
+            currentPoint = path.Peek();
+            path.Dequeue();
+        }
+
+        //redundant variable to check if it's being set right/working
+        Vector3 tempPos = Vector3.MoveTowards(agent.transform.position, currentPoint, moveSpeed * Time.deltaTime);
+
+        agent.transform.position = tempPos;
     }
 
+    Vector3 WaypointAdjustment(Vector3 waypoint)
+    {
+        Vector3 result = waypoint;
+        result.y = 0.4f;
 
+        return result;
+    }
 
     public void SetAgent(Enemy_Base host)
     {
