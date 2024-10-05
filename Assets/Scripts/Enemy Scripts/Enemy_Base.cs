@@ -7,7 +7,8 @@ using UnityEngine;
 
 public class Enemy_Base : MonoBehaviour
 {
-    [SerializeField]Tile currentTile;
+    [SerializeField] Tile currentTile;
+    [SerializeField] Tile SpawnTile;
     [NonSerialized] public int AttackRange; // >= 1
     public Tile destination;
     EnemyPathFinding pathFinder;
@@ -44,6 +45,7 @@ public class Enemy_Base : MonoBehaviour
             if (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("EnemySpawn") || hit.collider.CompareTag("Home"))
             {
                 currentTile = hit.collider.GetComponent<Tile>();
+                SpawnTile = hit.collider.GetComponent<Tile>();
             }
         }
 
@@ -89,6 +91,10 @@ public class Enemy_Base : MonoBehaviour
     public Tile GetCurrentTile()
     {
         return currentTile;
+    }
+    public Tile GetSpawnTile()
+    {
+        return SpawnTile;
     }
     protected virtual void Update()
     {

@@ -11,6 +11,8 @@ public class Tile : MonoBehaviour
     public bool EnemySpawner = false;
     public int SpawnNumEnemies = 0;
 
+    public List<Tile> PresetPath;
+
 
     [NonSerialized] public int ID;
 

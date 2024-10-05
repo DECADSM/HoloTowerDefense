@@ -15,12 +15,26 @@ public class EnemyPathFinding : MonoBehaviour
     {
         path = new Queue<Vector3>();
         agent = GetComponent<Enemy_Base>();
+        if(agent.GetCurrentTile().PresetPath.Count > 0)
+        {
+            foreach(var pos in agent.GetCurrentTile().PresetPath)
+            {
+                path.Enqueue(pos.transform.position);
+            }
+        }
         MakePath();
     }
 
     public void MakePath()
     {
-        Tile pathTile = agent.GetCurrentTile();
+        Tile pathTile;
+        if (path.Count > 0)
+        {
+            pathTile = agent.GetSpawnTile().PresetPath[agent.GetSpawnTile().PresetPath.Count - 1];
+        }
+        else
+            pathTile = agent.GetCurrentTile();
+
         List<KeyValuePair<Tile, float>> distances = new List<KeyValuePair<Tile, float>>();
         while(pathTile != agent.destination)
         {
@@ -103,7 +117,6 @@ public class EnemyPathFinding : MonoBehaviour
                 waypoint = WaypointAdjustment(distances[0].Key.transform.position);
                 path.Enqueue(waypoint);
                 pathTile = distances[0].Key;
-                continue;
             }
             else if (distances.Count == 2)
             {
@@ -147,6 +160,11 @@ public class EnemyPathFinding : MonoBehaviour
             
         }
         return;
+    }
+
+    void MakePathUpdate()
+    {
+
     }
 
     public void MoveAgent()
