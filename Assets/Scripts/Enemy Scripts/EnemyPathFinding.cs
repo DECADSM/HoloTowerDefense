@@ -15,14 +15,17 @@ public class EnemyPathFinding : MonoBehaviour
     {
         path = new Queue<Vector3>();
         agent = GetComponent<Enemy_Base>();
-        if(agent.GetCurrentTile().PresetPath.Count > 0)
+        if(agent.GetSpawnTile().PresetPath.Count > 0)
         {
             foreach(var pos in agent.GetCurrentTile().PresetPath)
             {
                 path.Enqueue(pos.transform.position);
             }
         }
-        MakePath();
+        if(agent.GetSpawnTile().PresetPath[agent.GetSpawnTile().PresetPath.Count - 1] != agent.destination)
+        {
+            MakePath();
+        }
     }
 
     public void MakePath()

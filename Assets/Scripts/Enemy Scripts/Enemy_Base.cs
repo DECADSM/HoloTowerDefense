@@ -36,6 +36,9 @@ public class Enemy_Base : MonoBehaviour
         pathFinder = GetComponent<EnemyPathFinding>();
         destination = GetDestination();
 
+        //look at Home Tile
+        transform.LookAt(destination.transform.position);
+
         RaycastHit hit;
         var raycast_position = transform.position;
         raycast_position.y += 10;
@@ -44,8 +47,7 @@ public class Enemy_Base : MonoBehaviour
         {
             if (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("EnemySpawn") || hit.collider.CompareTag("Home"))
             {
-                currentTile = hit.collider.GetComponent<Tile>();
-                SpawnTile = hit.collider.GetComponent<Tile>();
+                currentTile = SpawnTile = hit.collider.GetComponent<Tile>();
             }
         }
 
