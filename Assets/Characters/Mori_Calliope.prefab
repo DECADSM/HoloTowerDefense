@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 242745620773219234}
   - component: {fileID: -2460672721122208808}
   - component: {fileID: -2154189105424753278}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Mori_Calliope
   m_TagString: Character
   m_Icon: {fileID: 0}
@@ -27,12 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 242745620773219232}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.618681, y: 1, z: 1.3622775}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &242745620773219237
 MeshFilter:
@@ -92,9 +93,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 242745620773219232}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 15, y: 1, z: 15}
   m_Center: {x: 5, y: 1, z: 0}
 --- !u!114 &-2154189105424753278
@@ -112,3 +121,8 @@ MonoBehaviour:
   Name: Mori
   Generation: Myth
   Branch: EN
+  health: 10000
+  damage: 500
+  isDead: 0
+  block: 1
+  blocking: 0

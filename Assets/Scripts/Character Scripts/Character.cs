@@ -33,9 +33,11 @@ public class Character : MonoBehaviour
     GameObject baseTile;
 
 
-    int health;
-    int damage;
-    bool isDead;
+    [SerializeField] int health = 10000; //10,000
+    [SerializeField] int damage = 500;
+    [SerializeField] bool isDead = false;
+    [SerializeField] int block = 1;
+    [SerializeField] int blocking = 0;
 
     float atkSpeed;
 
@@ -82,7 +84,7 @@ public class Character : MonoBehaviour
             if (hit.collider.CompareTag("Tile"))
             {
                 baseTile = hit.collider.gameObject;
-                
+                baseTile.GetComponent<Tile>().SetCharacter(this);
                 TileSet = false;
                 //print(baseTile.name);
             }
@@ -93,6 +95,12 @@ public class Character : MonoBehaviour
             transform.localPosition = new Vector3(0, 1, 0);
         }
     }
+
+    public int GetHealth() { return health; }
+    public int GetBlock() { return block;  }
+    public bool GetDead() { return isDead; }
+    public void AddBlocking() { blocking++; }
+    public bool MaxBlocking() { return blocking == block; }
 
     public virtual void Attack()
     {

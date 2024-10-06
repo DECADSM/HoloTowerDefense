@@ -171,6 +171,19 @@ public class EnemyPathFinding : MonoBehaviour
     {
         if (agent.GetCurrentTile().CompareTag("Home"))
             return;
+
+        if(agent.GetCurrentTile().CharacterOnTile != null)
+        {
+            Character c = agent.GetCurrentTile().CharacterOnTile;
+            if (!c.MaxBlocking())
+            {
+                if (!c.GetDead() && c.GetBlock() > 0)
+                {
+                    c.AddBlocking();
+                    return;
+                }
+            }
+        }
         //grab the point in queue then get rid of it
         if ((currentPoint == Vector3.zero || Vector3.Distance(currentPoint, agent.transform.position) < 0.5f) && path.Count > 0)
         {
