@@ -13,6 +13,8 @@ public class Enemy_Base : MonoBehaviour
     public Tile destination;
     EnemyPathFinding pathFinder;
 
+    [SerializeField] private LayerMask mask;
+
     int health;
     int damage;
     bool isDead;
@@ -42,7 +44,7 @@ public class Enemy_Base : MonoBehaviour
         RaycastHit hit;
         var raycast_position = transform.position;
         raycast_position.y += 10;
-        bool test = Physics.Raycast(raycast_position, downVector, out hit, 20);
+        bool test = Physics.Raycast(raycast_position, downVector, out hit, 20); //layer masking layer 3
         if (test)
         {
             if (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("EnemySpawn") || hit.collider.CompareTag("Home"))
@@ -67,6 +69,20 @@ public class Enemy_Base : MonoBehaviour
 
     virtual public void Enemy_Update()
     {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, downVector, out hit, 20))
+        {
+            if (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("EnemySpawn") || hit.collider.CompareTag("Home"))
+            {
+                if(currentTile != null)
+                {
+                    if (!hit.Equals(currentTile))
+                        currentTile.GetComponent<Tile>().ClearEnemies();
+                }
+                currentTile = hit.collider.GetComponent<Tile>();
+                currentTile.AddEnemy(this);
+            }
+        }
         pathFinder.MoveAgent();
     }
 
@@ -100,13 +116,6 @@ public class Enemy_Base : MonoBehaviour
     }
     protected virtual void Update()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, downVector, out hit, 20))
-        {
-            if (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("EnemySpawn") || hit.collider.CompareTag("Home"))
-            {
-                currentTile = hit.collider.GetComponent<Tile>();
-            }
-        }
+        
     }
 }

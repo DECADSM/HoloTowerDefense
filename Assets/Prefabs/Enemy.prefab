@@ -120,7 +120,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTile: {fileID: 0}
+  SpawnTile: {fileID: 0}
   destination: {fileID: 0}
+  mask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &-3230030349628116645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,6 +137,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df0bb89722e4922418bb16b121136c48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  path: []
   agent: {fileID: 0}
-  speed: 3
+  moveSpeed: 3
