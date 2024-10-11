@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class EnemyPathFinding : MonoBehaviour
 {
@@ -9,7 +11,18 @@ public class EnemyPathFinding : MonoBehaviour
     public float moveSpeed = 3;
     Vector3 currentPoint;
 
-    int directions = 4; //used to loop through the directions for pathfinding
+    bool CanMove = true;
+
+    //int directions = 4; //used to loop through the directions for pathfinding
+
+    enum Directions
+    {
+        NONE,
+        RIGHT,
+        LEFT,
+        UP,
+        DOWN,
+    }
     
     public void PathFindingInit()
     {
@@ -17,17 +30,11 @@ public class EnemyPathFinding : MonoBehaviour
         agent = GetComponent<Enemy_Base>();
         if(agent.GetSpawnTile().PresetPath.Count > 0)
         {
-            foreach(var pos in agent.GetCurrentTile().PresetPath)
-            {
-                path.Enqueue(pos.transform.position);
-            }
-        }
-        if(agent.GetSpawnTile().PresetPath[agent.GetSpawnTile().PresetPath.Count - 1] != agent.destination)
-        {
-            MakePath();
+            path.Enqueue(WaypointAdjustment(agent.GetSpawnTile().PresetPath[0].transform.position));
         }
     }
 
+    /*
     public void MakePath()
     {
         Tile pathTile;
@@ -41,14 +48,14 @@ public class EnemyPathFinding : MonoBehaviour
         List<KeyValuePair<Tile, float>> distances = new List<KeyValuePair<Tile, float>>();
         while(pathTile != agent.destination)
         {
-            /*
+            //*
              Loop thorugh the directions (+ X, +/-Z) and cast down to check for a tile with the tile tag
             Furture: Raycast in (+X, +/- Z) for any obstacles
             calculate the distance from the Spawn tile to the Home tile
             calculate the distance between the raycasted tile and the home tile
             compare the distance between the two calculations above
             repeat for all directions then take the Tile closer to the Home Tile
-             */
+
             if(distances.Count > 0)
                 distances.Clear();
 
@@ -82,7 +89,7 @@ public class EnemyPathFinding : MonoBehaviour
                         ODPos = 2;
                         break;
                     case 3:
-                        TileRaycast.x += 5; //towards the bottom
+                        TileRaycast.x += 5; //Right to Left
                         direction = agent.transform.right;
                         ODPos = 3;
                         break;
@@ -164,10 +171,133 @@ public class EnemyPathFinding : MonoBehaviour
         }
         return;
     }
+*/
 
-    void MakePathUpdate()
+    public void UpdatePath()
     {
+        Vector3 upDir = agent.transform.forward, downDir = -agent.transform.forward, leftDir = -agent.transform.right, rightDir = agent.transform.right;
 
+        int[] openDirections = { 0, 0, 0, 0 }; //1 means open, 0 means closed; {left, up, down, right}
+
+        Directions destDir = Directions.NONE;
+
+        //Enemy Spawn Tiles on the right of the screen
+        //+X goes right +Z goes up
+
+        if (agent.transform.position.x > path.Peek().x)
+            destDir = Directions.LEFT; //left
+        else if (agent.transform.position.z > path.Peek().z)
+            destDir = Directions.DOWN; //down
+        else if (agent.transform.position.x < path.Peek().x)
+            destDir = Directions.RIGHT; //right
+        else if (agent.transform.position.z < path.Peek().z)
+            destDir = Directions.UP; //up
+
+        RaycastHit upHit, leftHit, rightHit, downHit;
+        if(Physics.Raycast(path.Peek(), upDir, out upHit, 5))
+        {
+            if (upHit.collider.CompareTag("Wall"))
+            {
+                openDirections[1] = 1;
+            }
+        }
+        if (Physics.Raycast(path.Peek(), leftDir, out leftHit, 5))
+        {
+            if (leftHit.collider.CompareTag("Wall"))
+            {
+                openDirections[0] = 1;
+            }
+        }
+        if (Physics.Raycast(path.Peek(), rightDir, out rightHit, 5))
+        {
+            if (rightHit.collider.CompareTag("Wall"))
+            {
+                openDirections[3] = 1;
+            }
+        }
+        if (Physics.Raycast(path.Peek(), downDir, out downHit, 5))
+        {
+            if (downHit.collider.CompareTag("Wall"))
+            {
+                openDirections[2] = 1;
+            }
+        }
+
+        switch(destDir)
+        {
+            case Directions.UP:
+                if (openDirections[1] == 1)
+                {
+                    if(openDirections[3] == 1 && openDirections[0] == 1)
+                    {
+                        //stop moving or move down
+                    }
+                    else if (openDirections[3] == 0)
+                    {
+                        //move right
+                    }
+                    else
+                    {
+                        //move left
+                    }
+                }
+                break;
+            case Directions.DOWN:
+                if (openDirections[2] == 1)
+                {
+                    if (openDirections[3] == 1 && openDirections[0] == 1)
+                    {
+                        //stop moving or move up
+                    }
+                    else if (openDirections[3] == 0)
+                    {
+                        //move right
+                    }
+                    else
+                    {
+                        //move left
+                    }
+                }
+                break;
+            case Directions.LEFT:
+                if (openDirections[0] == 1)
+                {
+                    if (openDirections[1] == 1 && openDirections[2] == 1)
+                    {
+                        //stop moving or move back
+                    }
+                    else if(openDirections[1] == 0)
+                    {
+                        //move up
+                    }
+                    else
+                    {
+                        //move down
+                    }
+                }
+                break;
+            case Directions.RIGHT:
+                if (openDirections[3] == 1)
+                {
+                    if (openDirections[1] == 1 && openDirections[2] == 1)
+                    {
+                        //stop moving or move back
+                    }
+                    else if (openDirections[1] == 0)
+                    {
+                        //move up
+                    }
+                    else
+                    {
+                        //move down
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
+        
     }
 
     public void MoveAgent()

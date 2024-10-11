@@ -83,6 +83,7 @@ public class Enemy_Base : MonoBehaviour
                 currentTile.AddEnemy(this);
             }
         }
+        pathFinder.UpdatePath();
         pathFinder.MoveAgent();
     }
 
